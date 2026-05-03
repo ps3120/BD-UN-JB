@@ -47,20 +47,20 @@ public class PS5_KernelOffset {
     
     public static long getOffset(String key) {
         Hashtable offsets;
-        
+    
         if (KernelOffsets.containsKey(FW_VERSION)) {
             offsets = (Hashtable) KernelOffsets.get(FW_VERSION);
         } else {
-            String prefix = FW_VERSION.contains(".") ? FW_VERSION.substring(0, FW_VERSION.indexOf('.') + 1) : FW_VERSION;
-            offsets = (Hashtable) KernelOffsets.get(prefix);
+            String major = FW_VERSION.indexOf('.') != -1 ? FW_VERSION.substring(0, FW_VERSION.indexOf('.')) : FW_VERSION;
+            offsets = (Hashtable) KernelOffsets.get(major + ".00");
         }
-        
+    
         if (offsets == null) {
             throw new RuntimeException("No offsets available for firmware " + FW_VERSION);
         }
         Long offset = (Long) offsets.get(key);
         if (offset == null) {
-            throw new RuntimeException("Offset " + offset + " not found for firmware " + FW_VERSION);
+            throw new RuntimeException("Offset " + key + " not found for firmware " + FW_VERSION); // key, not offset
         }
         return offset.longValue();
     }
