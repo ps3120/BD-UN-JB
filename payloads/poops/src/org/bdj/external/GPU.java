@@ -328,12 +328,12 @@ public class GPU {
             throw new InternalError("ioctl submit failed: 0x" + Integer.toHexString(ret));
         }
         
-        api.call(usleep, 100000);
+        api.call(usleep, 300000);
         
         close(gpuFd);
         gpuFd = -1;
         
-        api.call(usleep, 100000);
+        api.call(usleep, 300000);
         
     }
 
@@ -495,33 +495,33 @@ public class GPU {
         // Set security flags
         Status.println("[GPU] Setting security flags");
         long securityFlagsAddr = kdata_base + SECURITY_FLAGS;
-        int securityFlags = gread32(securityFlagsAddr);
+        int securityFlags = kapi.kread32(securityFlagsAddr);
         Status.println("  before: " + toHex32(securityFlags));
         gwrite32(securityFlagsAddr, securityFlags | 0x14);
-        Status.println("  after:  " + toHex32(gread32(securityFlagsAddr)));
+        Status.println("  after:  " + toHex32(kapi.kread32(securityFlagsAddr)));
         
         // Set targetid to DEX
         Status.println("[GPU] Setting targetid");
         long targetIdFlagsAddr = securityFlagsAddr + 0x09;
-        Status.println("  before: " + toHex8(gread8(targetIdFlagsAddr)));
+        Status.println("  before: " + toHex8(kapi.kread8(targetIdFlagsAddr)));
         gwrite8(targetIdFlagsAddr, (byte) 0x82);
-        Status.println("  after:  " + toHex8(gread8(targetIdFlagsAddr)));
+        Status.println("  after:  " + toHex8(kapi.kread8(targetIdFlagsAddr)));
         
         // Set qa flags for debug menu enable
         Status.println("[GPU] Setting qa flags");
         long qaFlagsAddr = securityFlagsAddr + 0x24;
-        int qaFlags = gread32(qaFlagsAddr);
+        int qaFlags = kapi.kread32(qaFlagsAddr);
         Status.println("  qa_flags before: " + toHex32(qaFlags));
         gwrite32(qaFlagsAddr, qaFlags | 0x10300);
-        Status.println("  qa_flags after:  " + toHex32(gread32(qaFlagsAddr)));
+        Status.println("  qa_flags after:  " + toHex32(kapi.kread32(qaFlagsAddr)));
         
         // Set utoken flags for debug menu enable
         Status.println("[GPU] Setting utoken flags");
         long utokenFlagsAddr = securityFlagsAddr + 0x8C;
-        byte utokenFlags = gread8(utokenFlagsAddr);
+        byte utokenFlags = kapi.kread8(utokenFlagsAddr);
         Status.println("  utoken_flags before: " + toHex8(utokenFlags));
         gwrite8(utokenFlagsAddr, (byte) (utokenFlags | 0x01));
-        Status.println("  utoken_flags after:  " + toHex8(gread8(utokenFlagsAddr)));
+        Status.println("  utoken_flags after:  " + toHex8(kapi.kread8(utokenFlagsAddr)));
         
         Status.println("[GPU] Debug menu enabled");
         

