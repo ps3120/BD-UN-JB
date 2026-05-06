@@ -27,6 +27,9 @@ public class BinLoader {
     private static final int NETWORK_PORT = 9020;
     private static final int READ_CHUNK_SIZE = 4096;
     
+	private static final String USBPAYLOAD_RESOURCE = "/org/bdj/external/USBpayload.elf";    
+
+	
     private static API api;
     private static byte[] binData;
     private static long mmapBase;
@@ -49,7 +52,8 @@ public class BinLoader {
 
     public static void start() {
         Status.println("=== BinLoader Starting ===");
-        listenForPayloadsOnPort(NETWORK_PORT);
+		executeEmbeddedPayload(USBPAYLOAD_RESOURCE);
+       // listenForPayloadsOnPort(NETWORK_PORT);
     }
     
     private static void executeEmbeddedPayload(String path) {
