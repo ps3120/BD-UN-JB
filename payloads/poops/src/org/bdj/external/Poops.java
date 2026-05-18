@@ -15,7 +15,7 @@ import java.io.*;
 
 public class Poops {
     
-    private static final String VERSION_STRING = "BD-J Poopsploit 1.5 v2";
+    //private static final String VERSION_STRING = "BD-J Poopsploit 1.5 v2";
     
     private static final int KERNEL_PID = 0;
     
@@ -277,7 +277,7 @@ public class Poops {
         
         getFirmware();
         
-        NativeInvoke.sendNotificationRequest("PLATFORM : " + PLATFORM + "\nFW_VERSION : " + FW_VERSION);
+        //NativeInvoke.sendNotificationRequest("PLATFORM : " + PLATFORM + "\nFW_VERSION : " + FW_VERSION);
         
         NID_PATH = "/" + getNidPath() + "/common_temp/bdj.fail";        
         Status.println("NID_PATH : " + NID_PATH);
@@ -1349,7 +1349,7 @@ public class Poops {
     public static void main(String[] args) {
         Status.setNetworkLoggerEnabled(false);
         
-        NativeInvoke.sendNotificationRequest(VERSION_STRING);
+        //NativeInvoke.sendNotificationRequest(VERSION_STRING);
         
         if (!setup()) {
             Status.println("setup failed");
